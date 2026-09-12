@@ -52,6 +52,9 @@ dns:
     doh.pub:
     - 1.12.12.12
     - 120.53.53.53
+    geosite:geolocation-!cn:
+    - https://dns.cloudflare.com/dns-query#🚀 代理总控
+    - https://dns.google/dns-query#🚀 代理总控
     geosite:cn:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
@@ -118,7 +121,7 @@ proxy-groups:
   include-all: true
   url: http://www.gstatic.com/generate_204
   interval: 600
-  tolerance: 50  
+  tolerance: 50
 - name: 🔔 苹果推送
   type: fallback
   proxies:
@@ -420,112 +423,112 @@ proxy-groups:
 - name: 🇯🇵 日本自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[JP\\]|^JP$|\\bJP\\b|Japan|日本|东京|Tokyo|大阪|Osaka|🇯🇵)"
+  filter: (?i)(\[JP\]|^JP$|\bJP\b|Japan|日本|东京|Tokyo|大阪|Osaka|🇯🇵)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇸🇬 新加坡自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[SG\\]|^SG$|\\bSG\\b|Singapore|新加坡|狮城|🇸🇬)"
+  filter: (?i)(\[SG\]|^SG$|\bSG\b|Singapore|新加坡|狮城|🇸🇬)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇹🇼 台湾自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[TW\\]|^TW$|\\bTW\\b|Taiwan|台湾|台灣|🇹🇼)"
+  filter: (?i)(\[TW\]|^TW$|\bTW\b|Taiwan|台湾|台灣|🇹🇼)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇭🇰 香港自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[HK\\]|^HK$|\\bHK\\b|Hong Kong|香港|🇭🇰)"
+  filter: (?i)(\[HK\]|^HK$|\bHK\b|Hong Kong|香港|🇭🇰)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇲🇴 澳门自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[MO\\]|^MO$|\\bMO\\b|Macau|Macao|澳门|澳門|🇲🇴)"
+  filter: (?i)(\[MO\]|^MO$|\bMO\b|Macau|Macao|澳门|澳門|🇲🇴)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇰🇷 韩国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[KR\\]|^KR$|\\bKR\\b|Korea|South Korea|韩国|🇰🇷)"
+  filter: (?i)(\[KR\]|^KR$|\bKR\b|Korea|South Korea|韩国|🇰🇷)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇹🇭 泰国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[TH\\]|^TH$|\\bTH\\b|Thailand|Thai|泰国|曼谷|🇹🇭)"
+  filter: (?i)(\[TH\]|^TH$|\bTH\b|Thailand|Thai|泰国|曼谷|🇹🇭)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇻🇳 越南自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[VN\\]|^VN$|\\bVN\\b|Vietnam|Vietnamese|越南|胡志明市|河内|🇻🇳)"
+  filter: (?i)(\[VN\]|^VN$|\bVN\b|Vietnam|Vietnamese|越南|胡志明市|河内|🇻🇳)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇺🇸 美国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[US\\]|^US$|\\bUS\\b|USA|United States|美国|纽约|洛杉矶|旧金山|西雅图|🇺🇸)"
+  filter: (?i)(\[US\]|^US$|\bUS\b|USA|United States|美国|纽约|洛杉矶|旧金山|西雅图|🇺🇸)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇬🇧 英国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[UK\\]|^UK$|\\bUK\\b|\\[GB\\]|^GB$|\\bGB\\b|United Kingdom|UK|England|英国|伦敦|🇬🇧)"
+  filter: (?i)(\[UK\]|^UK$|\bUK\b|\[GB\]|^GB$|\bGB\b|United Kingdom|UK|England|英国|伦敦|🇬🇧)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇩🇪 德国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[DE\\]|^DE$|\\bDE\\b|Germany|德国|法兰克福|柏林|🇩🇪)"
+  filter: (?i)(\[DE\]|^DE$|\bDE\b|Germany|德国|法兰克福|柏林|🇩🇪)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇫🇷 法国自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[FR\\]|^FR$|\\bFR\\b|France|法国|巴黎|🇫🇷)"
+  filter: (?i)(\[FR\]|^FR$|\bFR\b|France|法国|巴黎|🇫🇷)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇨🇭 瑞士自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[CH\\]|^CH$|\\bCH\\b|Switzerland|Swiss|瑞士|苏黎世|日内瓦|🇨🇭)"
+  filter: (?i)(\[CH\]|^CH$|\bCH\b|Switzerland|Swiss|瑞士|苏黎世|日内瓦|🇨🇭)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇳🇱 荷兰自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[NL\\]|^NL$|\\bNL\\b|Netherlands|Dutch|荷兰|阿姆斯特丹|🇳🇱)"
+  filter: (?i)(\[NL\]|^NL$|\bNL\b|Netherlands|Dutch|荷兰|阿姆斯特丹|🇳🇱)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇨🇦 加拿大自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[CA\\]|^CA$|\\bCA\\b|Canada|Canadian|加拿大|多伦多|温哥华|🇨🇦)"
+  filter: (?i)(\[CA\]|^CA$|\bCA\b|Canada|Canadian|加拿大|多伦多|温哥华|🇨🇦)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
 - name: 🇷🇺 俄罗斯自动
   type: url-test
   include-all: true
-  filter: "(?i)(\\[RU\\]|^RU$|\\bRU\\b|Russia|Russian|俄罗斯|莫斯科|圣彼得堡|🇷🇺)"
+  filter: (?i)(\[RU\]|^RU$|\bRU\b|Russia|Russian|俄罗斯|莫斯科|圣彼得堡|🇷🇺)
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
@@ -706,10 +709,6 @@ rules:
 - DOMAIN-SUFFIX,ooklaserver.net,✈️ Speedtest
 - DOMAIN-SUFFIX,ookla.net,✈️ Speedtest
 - DOMAIN-SUFFIX,speedtestcustom.com,✈️ Speedtest
-- DOMAIN-SUFFIX,github.com,🚀 代理总控
-- DOMAIN-SUFFIX,githubusercontent.com,🚀 代理总控
-- DOMAIN-SUFFIX,githubassets.com,🚀 代理总控
-- DOMAIN-SUFFIX,raw.githubusercontent.com,🚀 代理总控
 - RULE-SET,Apple,DIRECT
 - RULE-SET,Apple_Domain,DIRECT
 - RULE-SET,AdvertisingLite,REJECT
@@ -722,41 +721,9 @@ rules:
 - DOMAIN-KEYWORD,chatgpt,🚀 代理总控
 - DOMAIN-SUFFIX,auth0.com,🚀 代理总控
 - DOMAIN-SUFFIX,identrust.com,🚀 代理总控
-- DOMAIN-SUFFIX,oaistatic.com,🚀 代理总控
-- DOMAIN-SUFFIX,oaiusercontent.com,🚀 代理总控
-- DOMAIN-SUFFIX,anthropic.com,🚀 代理总控
-- DOMAIN-SUFFIX,claude.ai,🚀 代理总控
-- DOMAIN-SUFFIX,deepmind.com,🚀 代理总控
-- DOMAIN-SUFFIX,gemini.google.com,🚀 代理总控
-- DOMAIN-KEYWORD,copilot,🚀 代理总控
-- DOMAIN-SUFFIX,designer.microsoft.com,🚀 代理总控
-- DOMAIN-SUFFIX,copilot.microsoft.com,🚀 代理总控
-- DOMAIN-SUFFIX,ai.microsoft.com,🚀 代理总控
 - DOMAIN,onedrive.live.com,🚀 代理总控
 - DOMAIN-SUFFIX,1drv.com,🚀 代理总控
-- DOMAIN-KEYWORD,google,🚀 代理总控
-- DOMAIN-SUFFIX,gmail.com,🚀 代理总控
-- DOMAIN-SUFFIX,googlevideo.com,🚀 代理总控
-- DOMAIN-SUFFIX,youtube.com,🚀 代理总控
-- DOMAIN-SUFFIX,ytimg.com,🚀 代理总控
-- DOMAIN-SUFFIX,ggpht.com,🚀 代理总控
-- DOMAIN-SUFFIX,telegram.org,🚀 代理总控
-- DOMAIN-SUFFIX,telegram.me,🚀 代理总控
-- DOMAIN-SUFFIX,t.me,🚀 代理总控
-- DOMAIN-SUFFIX,tdesktop.com,🚀 代理总控
-- IP-CIDR,91.108.4.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,91.108.8.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,91.108.12.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,91.108.16.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,91.108.20.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,91.108.56.0/22,🚀 代理总控,no-resolve
-- IP-CIDR,149.154.160.0/20,🚀 代理总控,no-resolve
-- IP-CIDR6,2001:b28:f23d::/48,🚀 代理总控,no-resolve
-- IP-CIDR6,2001:b28:f23f::/48,🚀 代理总控,no-resolve
-- IP-CIDR6,2001:67c:4e8::/48,🚀 代理总控,no-resolve
 - DOMAIN-KEYWORD,tiktok,🚀 代理总控
-- DOMAIN-KEYWORD,tiktokcdn,🚀 代理总控
-- DOMAIN-KEYWORD,tiktokv,🚀 代理总控
 - RULE-SET,ChinaMax,DIRECT
 - RULE-SET,ChinaMax_Domain,DIRECT
 - RULE-SET,ChinaMax_IP,DIRECT
