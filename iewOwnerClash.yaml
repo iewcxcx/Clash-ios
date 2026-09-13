@@ -22,69 +22,44 @@ dns:
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-
-  # DNS 引导解析也使用加密 DNS
-  # 不使用 223.* / 119.* / 2400:3200::* 等中国明文 DNS
   default-nameserver:
-  - tls://1.1.1.1
-  - tls://1.0.0.1
-  - tls://8.8.8.8
-  - tls://8.8.4.4
-  - tls://[2606:4700:4700::1111]
-  - tls://[2606:4700:4700::1001]
-  - tls://[2001:4860:4860::8888]
-  - tls://[2001:4860:4860::8844]
-
-  # 默认 DNS
-  # 通过代理访问国外 DoH
+  - 223.5.5.5
+  - 119.29.29.29
+  - 2400:3200::1
   nameserver:
-  - https://dns.cloudflare.com/dns-query#🚀 代理总控
-  - https://dns.google/dns-query#🚀 代理总控
-
-  # 代理节点自身的域名解析
-  # 防止代理节点域名解析回到运营商 DNS
-  proxy-server-nameserver:
-  - tls://1.1.1.1
-  - tls://8.8.8.8
-
-  # DIRECT 流量的 DNS
-  # 即使国内网站最终 DIRECT，DNS 也不交给系统/运营商
-  direct-nameserver:
   - https://dns.cloudflare.com/dns-query
   - https://dns.google/dns-query
-
-  # DIRECT DNS 同样遵守下面的 DNS 分流策略
-  direct-nameserver-follow-policy: true
-
+  proxy-server-nameserver-policy: null
+  proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+  direct-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
   nameserver-policy:
-
-    # DoH 服务自身域名
     dns.cloudflare.com:
-    - tls://1.1.1.1
-    - tls://1.0.0.1
-
+    - 1.1.1.1
+    - 1.0.0.1
     dns.google:
-    - tls://8.8.8.8
-    - tls://8.8.4.4
-
-    # 国内域名
-    # 使用国外 DoH 解析，不使用中国运营商 DNS
-    # 实际连接仍由 GEOSITE,CN / GEOIP,CN 负责 DIRECT
-    geosite:cn:
-    - https://dns.cloudflare.com/dns-query
-    - https://dns.google/dns-query
-
-    # 国外域名
-    # DNS 查询本身通过 🚀 代理总控
+    - 8.8.8.8
+    - 8.8.4.4
+    dns.quad9.net:
+    - 9.9.9.9
+    - 149.112.112.112
+    dns.alidns.com:
+    - 223.5.5.5
+    - 223.6.6.6
+    doh.pub:
+    - 1.12.12.12
+    - 120.53.53.53
     geosite:geolocation-!cn:
     - https://dns.cloudflare.com/dns-query#🚀 代理总控
     - https://dns.google/dns-query#🚀 代理总控
-
-  # 兜底 DNS 也通过代理
+    geosite:cn:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
   fallback:
-  - https://dns.cloudflare.com/dns-query#🚀 代理总控
-  - https://dns.google/dns-query#🚀 代理总控
-
+  - https://anycast.uncensoreddns.org/dns-query
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -92,7 +67,6 @@ dns:
     - 240.0.0.0/4
     - 127.0.0.0/8
     - 0.0.0.0/32
-
   fake-ip-filter:
   - '*.lan'
   - '*.local'
@@ -112,7 +86,6 @@ dns:
   - +.qq.com
   - +.tencent.com
   - speedtest.net
-
 profile:
   store-selected: true
   store-fake-ip: true
