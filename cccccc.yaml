@@ -19,7 +19,6 @@ tun:
     - any:53
     - tcp://any:53
 
-
 # 防泄漏加密 DNS (彻底屏蔽 fallback 泄漏)
 dns:
   enable: true
@@ -58,17 +57,14 @@ dns:
     - +.qq.com
     - +.tencent.com
     - speedtest.net
-
 profile:
   store-selected: true
   store-fake-ip: true
-
 proxy-groups:
 - name: 🚀 代理总控
   type: select
   proxies:
   - 🖥️ 全局订阅
-
   - ⚡ 自动测速
   - 🔔 苹果推送
   - 🇯🇵 日本自动
@@ -93,7 +89,6 @@ proxy-groups:
   include-all: true
 - name: ⚡ 自动测速
   type: url-test
-
   include-all: true
   url: http://www.gstatic.com/generate_204
   interval: 600
@@ -116,7 +111,6 @@ proxy-groups:
   proxies:
   - 🚀 代理总控
   - 🖥️ 全局订阅
-
   - ⚡ 自动测速
   - 🇯🇵 日本自动
   - 🇸🇬 新加坡自动
@@ -141,7 +135,6 @@ proxy-groups:
   - 🇺🇸 美国自动
   - 🇬🇧 英国自动
   - 🇨🇦 加拿大自动
-
   - DIRECT
 - name: 📲 X
   type: select
@@ -166,7 +159,6 @@ proxy-groups:
   - ⚡ 自动测速
   - 🇯🇵 日本自动
   - 🇸🇬 新加坡自动
-
   - 🇹🇼 台湾自动
   - 🇭🇰 香港自动
   - 🇰🇷 韩国自动
@@ -191,7 +183,6 @@ proxy-groups:
   - DIRECT
 - name: 💫 Instagram
   type: select
-
   proxies:
   - 🚀 代理总控
   - 🖥️ 全局订阅
@@ -216,7 +207,6 @@ proxy-groups:
   - 🇹🇼 台湾自动
   - 🇭🇰 香港自动
   - 🇰🇷 韩国自动
-
   - 🇺🇸 美国自动
   - 🇬🇧 英国自动
   - 🇨🇦 加拿大自动
@@ -241,7 +231,6 @@ proxy-groups:
   proxies:
   - 🚀 代理总控
   - 🖥️ 全局订阅
-
   - ⚡ 自动测速
   - 🇯🇵 日本自动
   - 🇸🇬 新加坡自动
@@ -266,7 +255,6 @@ proxy-groups:
   - 🇺🇸 美国自动
   - 🇬🇧 英国自动
   - 🇨🇦 加拿大自动
-
   - DIRECT
 - name: 📽 Disney+
   type: select
@@ -291,7 +279,6 @@ proxy-groups:
   - ⚡ 自动测速
   - 🇯🇵 日本自动
   - 🇸🇬 新加坡自动
-
   - 🇹🇼 台湾自动
   - 🇭🇰 香港自动
   - 🇰🇷 韩国自动
@@ -316,7 +303,6 @@ proxy-groups:
   - DIRECT
 - name: 🕹️ Twitch
   type: select
-
   proxies:
   - 🚀 代理总控
   - 🖥️ 全局订阅
@@ -341,7 +327,6 @@ proxy-groups:
   - 🇹🇼 台湾自动
   - 🇭🇰 香港自动
   - 🇰🇷 韩国自动
-
   - 🇺🇸 美国自动
   - 🇬🇧 英国自动
   - 🇨🇦 加拿大自动
@@ -366,7 +351,6 @@ proxy-groups:
   proxies:
   - 🚀 代理总控
   - 🖥️ 全局订阅
-
   - ⚡ 自动测速
   - 🇯🇵 日本自动
   - 🇸🇬 新加坡自动
@@ -391,7 +375,6 @@ proxy-groups:
   - 🇺🇸 美国自动
   - 🇬🇧 英国自动
   - 🇨🇦 加拿大自动
-
   - DIRECT
 - name: ✈️ Speedtest
   type: select
@@ -415,7 +398,6 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
-
 - name: 🇸🇬 新加坡自动
   type: url-test
   include-all: true
@@ -437,7 +419,6 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
-
 - name: 🇲🇴 澳门自动
   type: url-test
   include-all: true
@@ -459,7 +440,6 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: 600
   tolerance: 50
-
 - name: 🇻🇳 越南自动
   type: url-test
   include-all: true
@@ -480,7 +460,6 @@ proxy-groups:
   filter: (?i)(\[UK\]|^UK$|\bUK\b|\[GB\]|^GB$|\bGB\b|United Kingdom|UK|England|英国|伦敦|🇬🇧)
   url: http://www.gstatic.com/generate_204
   interval: 600
-
   tolerance: 50
 - name: 🇩🇪 德国自动
   type: url-test
@@ -502,7 +481,6 @@ proxy-groups:
   filter: (?i)(\[CH\]|^CH$|\bCH\b|Switzerland|Swiss|瑞士|苏黎世|日内瓦|🇨🇭)
   url: http://www.gstatic.com/generate_204
   interval: 600
-
   tolerance: 50
 - name: 🇳🇱 荷兰自动
   type: url-test
@@ -524,9 +502,7 @@ proxy-groups:
   filter: (?i)(\[RU\]|^RU$|\bRU\b|Russia|Russian|俄罗斯|莫斯科|圣彼得堡|🇷🇺)
   url: http://www.gstatic.com/generate_204
   interval: 600
-
   tolerance: 50
-
 rule-providers:
   Apple:
     type: http
@@ -546,7 +522,6 @@ rule-providers:
     format: yaml
     interval: 86400
     url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/AdvertisingLite.yaml
-
   AdvertisingLite_Domain:
     type: http
     behavior: domain
@@ -567,7 +542,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Privacy_Domain.mrs
   ACL4SSR_BanAD:
     type: http
-
     behavior: domain
     format: mrs
     interval: 86400
@@ -588,7 +562,6 @@ rule-providers:
     type: http
     behavior: domain
     format: mrs
-
     interval: 86400
     url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax_Domain.mrs
   ChinaMax_IP:
@@ -611,7 +584,6 @@ rules:
 - GEOIP,LAN,DIRECT,no-resolve
 
 # 苹果推送
-
 - DOMAIN-SUFFIX,push.apple.com,🔔 苹果推送
 - DOMAIN-SUFFIX,push-apple.com.akadns.net,🔔 苹果推送
 - DOMAIN-KEYWORD,apple.com.edgekey.net,🔔 苹果推送
@@ -822,71 +794,3 @@ Instagram
 
 # 兜底匹配
 - MATCH,🚀 代理总控
-
-rule-providers:
-  Apple:
-    type: http
-    behavior: classical
-    format: yaml
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Apple.yaml
-  Apple_Domain:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Apple_Domain.mrs
-  AdvertisingLite:
-    type: http
-    behavior: classical
-    format: yaml
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/AdvertisingLite.yaml
-  AdvertisingLite_Domain:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/AdvertisingLite_Domain.mrs
-  Privacy:
-    type: http
-    behavior: classical
-    format: yaml
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Privacy.yaml
-  Privacy_Domain:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Privacy_Domain.mrs
-  ACL4SSR_BanAD:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/BanAD_domain.mrs
-  ACL4SSR_BanProgramAD:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/BanProgramAD_domain.mrs
-  ChinaMax:
-    type: http
-    behavior: classical
-    format: yaml
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax.yaml
-  ChinaMax_Domain:
-    type: http
-    behavior: domain
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax_Domain.mrs
-  ChinaMax_IP:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax_IP.mrs
