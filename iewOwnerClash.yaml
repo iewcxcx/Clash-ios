@@ -736,64 +736,64 @@ rule-providers:
     behavior: classical
     format: yaml
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Apple.yaml
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/Apple.yaml
   Apple_Domain:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Apple_Domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/Apple_Domain.mrs
   AdvertisingLite:
     type: http
     behavior: classical
     format: yaml
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/AdvertisingLite.yaml
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/AdvertisingLite.yaml
   AdvertisingLite_Domain:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/AdvertisingLite_Domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/AdvertisingLite_Domain.mrs
   Privacy:
     type: http
     behavior: classical
     format: yaml
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Privacy.yaml
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/Privacy.yaml
   Privacy_Domain:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/Privacy_Domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/Privacy_Domain.mrs
   ACL4SSR_BanAD:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/BanAD_domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/BanAD_domain.mrs
   ACL4SSR_BanProgramAD:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/BanProgramAD_domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/BanProgramAD_domain.mrs
   ChinaMax:
     type: http
     behavior: classical
     format: yaml
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax.yaml
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/ChinaMax.yaml
   ChinaMax_Domain:
     type: http
     behavior: domain
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax_Domain.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/ChinaMax_Domain.mrs
   ChinaMax_IP:
     type: http
     behavior: ipcidr
     format: mrs
     interval: 86400
-    url: https://raw.githubusercontent.com/iewcxcx/clash-os/main/ChinaMax_IP.mrs
+    url: https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/ChinaMax_IP.mrs
