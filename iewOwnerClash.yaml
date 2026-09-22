@@ -27,13 +27,17 @@ dns:
 
   default-nameserver:
   - 223.5.5.5
-  - 119.29.29.29
+  - 119.29.29.119
 
   nameserver:
   - https://dns.cloudflare.com/dns-query
   - https://dns.google/dns-query
 
   proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
+
+  direct-nameserver:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
 
@@ -53,12 +57,21 @@ dns:
     doh.pub:
     - 1.12.12.12
     - 120.53.53.53
-    geosite:geolocation-!cn:
-    - https://dns.cloudflare.com/dns-query#🚀 代理总控
-    - https://dns.google/dns-query#🚀 代理总控
+
     geosite:cn:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  fallback:
+  - https://anycast.uncensoreddns.org/dns-query
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+    - 240.0.0.0/4
+    - 127.0.0.0/8
+    - 0.0.0.0/32
 
   fake-ip-filter:
   - '*.lan'
