@@ -9,8 +9,13 @@ tcp-concurrent: true
 ipv6: false
 
 tun:
+  enable: true
   stack: gvisor
+  auto-route: true
+  auto-detect-interface: true
   strict-route: true
+  dns-hijack:
+  - any:53
 
 dns:
   enable: true
@@ -29,10 +34,6 @@ dns:
   - https://dns.google/dns-query
 
   proxy-server-nameserver:
-  - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
-
-  direct-nameserver:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
 
@@ -58,17 +59,6 @@ dns:
     geosite:cn:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
-
-  fallback:
-  - https://anycast.uncensoreddns.org/dns-query
-
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-    - 240.0.0.0/4
-    - 127.0.0.0/8
-    - 0.0.0.0/32
 
   fake-ip-filter:
   - '*.lan'
