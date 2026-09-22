@@ -6,29 +6,23 @@ log-level: info
 external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: true
-ipv6: true
+ipv6: false
 
 tun:
-  enable: true
-  stack: mips
-  auto-route: true
-  auto-detect-interface: true
+  stack: gvisor
   strict-route: true
-  dns-hijack:
-  - any:53
 
 dns:
   enable: true
   respect-rules: true
-  ipv6: true
+  ipv6: false
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
   default-nameserver:
   - 223.5.5.5
-  - 119.29.29.119
-  - 2400:3200::1
+  - 119.29.29.29
 
   nameserver:
   - https://dns.cloudflare.com/dns-query
@@ -58,6 +52,7 @@ dns:
     doh.pub:
     - 1.12.12.12
     - 120.53.53.53
+
     geosite:cn:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
