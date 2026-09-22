@@ -12,10 +12,12 @@ tun:
   enable: true
   stack: gvisor
   auto-route: true
+  auto-redirect: true
   auto-detect-interface: true
   strict-route: true
   dns-hijack:
     - any:53
+    - tcp://any:53
 
 dns:
   enable: true
@@ -25,23 +27,31 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
+  # 用境外 DNS 做默认解析
   default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - 1.1.1.1
+    - 8.8.8.8
 
+  # 国外 DNS
   nameserver:
     - https://cloudflare-dns.com/dns-query#🚀 代理总控
     - https://dns.google/dns-query#🚀 代理总控
 
+  # 代理节点域名也使用境外 DNS
   proxy-server-nameserver:
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
+    - 1.1.1.1
+    - 8.8.8.8
 
+  # DIRECT 的重新解析也不使用系统/运营商 DNS
   direct-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
+    - 1.1.1.1
+    - 8.8.8.8
+
+  direct-nameserver-follow-policy: true
 
   nameserver-policy:
+
+    # Cloudflare / Google 自己的域名不能依赖普通域名解析
     dns.cloudflare.com:
       - 1.1.1.1
       - 1.0.0.1
@@ -54,10 +64,12 @@ dns:
       - 8.8.8.8
       - 8.8.4.4
 
+    # 国外域名
     geosite:geolocation-!cn:
       - https://cloudflare-dns.com/dns-query#🚀 代理总控
       - https://dns.google/dns-query#🚀 代理总控
 
+    # 国内域名仍然使用国内 DNS
     geosite:cn:
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
