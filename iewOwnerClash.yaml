@@ -27,10 +27,10 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
 
-  # 默认国外/未知域名：强制走代理加密 DoH
+  # 国外及默认域名走远端加密 DoH（防止 DNS 泄露）
   nameserver:
-    - https://dns.cloudflare.com/dns-query#🚀 代理总控
-    - https://dns.google/dns-query#🚀 代理总控
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.google/dns-query
 
   proxy-server-nameserver:
     - 223.5.5.5
@@ -39,7 +39,7 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
 
-  # 精简政策：只保留极其稳定的 cn 规则，保证国内软件秒开
+  # 只有国内域名调用阿里/腾讯 DNS（保障国内 App 秒开与 CDN 优化）
   nameserver-policy:
     'geosite:cn':
       - 223.5.5.5
@@ -509,7 +509,7 @@ proxy-groups:
     tolerance: 50
 
 rules:
-  # === 1. 防泄露强化：测试网站强制走代理，防规则误杀 ===
+  # === 防泄露规则：顶格优先拦截测试网站，防止被后续规则误杀走直连 ===
   - DOMAIN-KEYWORD,browserleaks,🚀 代理总控
   - DOMAIN-KEYWORD,ipleak,🚀 代理总控
   - DOMAIN-KEYWORD,ip-api,🚀 代理总控
@@ -519,18 +519,18 @@ rules:
   - DOMAIN-SUFFIX,browserleaks.com,🚀 代理总控
   - DOMAIN-SUFFIX,ip.check.place,🚀 代理总控
   
-  # === 2. 阻断 WebRTC ===
+  # === 阻断 WebRTC ===
   - DOMAIN-KEYWORD,stun,REJECT
   - DOMAIN-SUFFIX,stun,REJECT
 
-  # === 3. 局域网直连 ===
+  # === 局域网直连 ===
   - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
   - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
   - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
   - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
   - GEOIP,LAN,DIRECT,no-resolve
 
-  # === 4. 应用与常规分流规则 ===
+  # === 应用与常规分流规则 ===
   - DOMAIN-SUFFIX,push.apple.com,🔔 苹果推送
   - DOMAIN-SUFFIX,push-apple.com.akadns.net,🔔 苹果推送
   - DOMAIN-KEYWORD,apple.com.edgekey.net,🔔 苹果推送
