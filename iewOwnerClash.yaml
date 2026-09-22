@@ -7,6 +7,7 @@ external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: true
 ipv6: false
+
 tun:
   enable: true
   stack: gvisor
@@ -14,8 +15,8 @@ tun:
   auto-detect-interface: true
   strict-route: true
   dns-hijack:
-  - any:53
-  - tcp://any:53
+    - any:53
+
 dns:
   enable: true
   respect-rules: true
@@ -23,56 +24,68 @@ dns:
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+
   default-nameserver:
-  - 223.5.5.5
-  - 119.29.29.29
-  # 【Runestone 核心配置】默认仅走代理加密 DoH，不包含任何国内 DNS
-  nameserver:
-  - https://dns.cloudflare.com/dns-query#🚀 代理总控
-  - https://dns.google/dns-query#🚀 代理总控
-  proxy-server-nameserver:
-  - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
-  direct-nameserver:
-  - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
-  nameserver-policy:
-    dns.cloudflare.com:
-    - 1.1.1.1
-    - 1.0.0.1
-    dns.google:
-    - 8.8.8.8
-    - 8.8.4.4
-    dns.alidns.com:
     - 223.5.5.5
-    - 223.6.6.6
-    doh.pub:
-    - 1.12.12.12
-    - 120.53.53.53
-    # 只有显式判断为国内域名时，才允许调用国内 DNS
-    geosite:cn,china:
+    - 119.29.29.29
+
+  nameserver:
+    - https://cloudflare-dns.com/dns-query#🚀 代理总控
+    - https://dns.google/dns-query#🚀 代理总控
+
+  proxy-server-nameserver:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+
+  direct-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
+  nameserver-policy:
+    dns.cloudflare.com:
+      - 1.1.1.1
+      - 1.0.0.1
+
+    cloudflare-dns.com:
+      - 1.1.1.1
+      - 1.0.0.1
+
+    dns.google:
+      - 8.8.8.8
+      - 8.8.4.4
+
     geosite:geolocation-!cn:
-    - https://dns.cloudflare.com/dns-query#🚀 代理总控
-    - https://dns.google/dns-query#🚀 代理总控
+      - https://cloudflare-dns.com/dns-query#🚀 代理总控
+      - https://dns.google/dns-query#🚀 代理总控
+
+    geosite:cn:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+
   fake-ip-filter:
-  - '*.lan'
-  - '*.local'
-  - localhost
-  - '*.msftconnecttest.com'
-  - '*.msftncsi.com'
-  - '*.msidentity.com'
-  - captive.apple.com
-  - '*.push.apple.com'
-  - +.weixin.com
-  - +.wechat.com
-  - +.qq.com
-  - +.tencent.com
-  - speedtest.net
+    - '*.lan'
+    - '*.local'
+    - localhost
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.msidentity.com'
+    - captive.apple.com
+    - '*.push.apple.com'
+    - stun.*
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - +.stun.*.*.*.*.*
+    - +.weixin.com
+    - +.wechat.com
+    - +.qq.com
+    - +.tencent.com
+    - speedtest.net
+
 profile:
   store-selected: true
   store-fake-ip: true
+
 proxy-groups:
 - name: 🚀 代理总控
   type: select
