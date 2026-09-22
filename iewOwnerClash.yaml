@@ -25,73 +25,61 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
+  # 1. Bootstrapping 引导 DNS：仅填 IP，专门用于解析 DoH 域名自身的 IP，不经过代理
   default-nameserver:
-  - 223.5.5.5
-  - 119.29.29.29
-
-  nameserver:
-  - https://dns.cloudflare.com/dns-query
-  - https://dns.google/dns-query
-
-  proxy-server-nameserver:
-  - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
-
-  direct-nameserver:
-  - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
-
-  nameserver-policy:
-    dns.cloudflare.com:
-    - 1.1.1.1
-    - 1.0.0.1
-    dns.google:
-    - 8.8.8.8
-    - 8.8.4.4
-    dns.quad9.net:
-    - 9.9.9.9
-    - 149.112.112.112
-    dns.alidns.com:
     - 223.5.5.5
-    - 223.6.6.6
-    doh.pub:
-    - 1.12.12.12
-    - 120.53.53.53
+    - 119.29.29.29
+    - 1.1.1.1
 
-    geosite:cn:
+  # 2. 节点域名解析 DNS：专门用于解析机场代理服务器节点的域名
+  proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
 
-  fallback:
-  - https://anycast.uncensoreddns.org/dns-query
+  # 3. 直连域名解析 DNS：用于 DIRECT 规则域名的解析
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
 
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-    - 240.0.0.0/4
-    - 127.0.0.0/8
-    - 0.0.0.0/32
+  # 4. 默认主解析服务器：国外 DoH 强制尾缀 #🚀 代理总控，通过代理加密通道发起查询
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    - https://dns.cloudflare.com/dns-query#🚀 代理总控
+    - https://dns.google/dns-query#🚀 代理总控
 
+  # 5. 分流策略（核心防泄漏）：国内网站走国内 DoH，非中国网站强制走代理通道解析
+  nameserver-policy:
+    geosite:cn:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    geosite:geolocation-!cn:
+      - https://dns.cloudflare.com/dns-query#🚀 代理总控
+      - https://dns.google/dns-query#🚀 代理总控
+    geosite:gfw:
+      - https://dns.cloudflare.com/dns-query#🚀 代理总控
+      - https://dns.google/dns-query#🚀 代理总控
+
+  # 6. Fake-IP 过滤名单（保持您原有设置）
   fake-ip-filter:
-  - '*.lan'
-  - '*.local'
-  - localhost
-  - '*.msftconnecttest.com'
-  - '*.msftncsi.com'
-  - '*.msidentity.com'
-  - captive.apple.com
-  - '*.push.apple.com'
-  - stun.*
-  - +.stun.*.*
-  - +.stun.*.*.*
-  - +.stun.*.*.*.*
-  - +.stun.*.*.*.*.*
-  - +.weixin.com
-  - +.wechat.com
-  - +.qq.com
-  - +.tencent.com
-  - speedtest.net
+    - '*.lan'
+    - '*.local'
+    - localhost
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.msidentity.com'
+    - captive.apple.com
+    - '*.push.apple.com'
+    - stun.*
+    - +.stun.*.*
+    - +.stun.*.*.*
+    - +.stun.*.*.*.*
+    - +.stun.*.*.*.*.*
+    - +.weixin.com
+    - +.wechat.com
+    - +.qq.com
+    - +.tencent.com
+    - speedtest.net
 
 profile:
   store-selected: true
