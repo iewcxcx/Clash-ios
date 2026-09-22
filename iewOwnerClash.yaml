@@ -7,14 +7,11 @@ external-controller: 127.0.0.1:9090
 unified-delay: true
 tcp-concurrent: true
 ipv6: false
+
 tun:
-  enable: true
   stack: gvisor
-  auto-route: true
-  auto-detect-interface: true
   strict-route: true
-  dns-hijack:
-  - any:53
+
 dns:
   enable: true
   respect-rules: true
@@ -22,20 +19,23 @@ dns:
   prefer-h3: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+
   default-nameserver:
   - 223.5.5.5
   - 119.29.29.29
-  - 2400:3200::1
+
   nameserver:
   - https://dns.cloudflare.com/dns-query
   - https://dns.google/dns-query
-  proxy-server-nameserver-policy: null
+
   proxy-server-nameserver:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
+
   direct-nameserver:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
+
   nameserver-policy:
     dns.cloudflare.com:
     - 1.1.1.1
@@ -58,8 +58,10 @@ dns:
     geosite:cn:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+
   fallback:
   - https://anycast.uncensoreddns.org/dns-query
+
   fallback-filter:
     geoip: true
     geoip-code: CN
@@ -67,6 +69,7 @@ dns:
     - 240.0.0.0/4
     - 127.0.0.0/8
     - 0.0.0.0/32
+
   fake-ip-filter:
   - '*.lan'
   - '*.local'
@@ -86,10 +89,13 @@ dns:
   - +.qq.com
   - +.tencent.com
   - speedtest.net
+
 profile:
   store-selected: true
   store-fake-ip: true
+
 proxy-groups:
+
 - name: 🚀 代理总控
   type: select
   proxies:
