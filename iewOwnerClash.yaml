@@ -9,8 +9,13 @@ tcp-concurrent: true
 ipv6: false
 
 tun:
+  enable: true
   stack: gvisor
+  auto-route: true
+  auto-detect-interface: true
   strict-route: true
+  dns-hijack:
+  - any:53
 
 dns:
   enable: true
