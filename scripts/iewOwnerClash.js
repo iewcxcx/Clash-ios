@@ -1,1 +1,944 @@
-1
+function main(config) {
+  const fixed = {
+  "mixed-port": 7890,
+  "allow-lan": false,
+  "bind-address": "*",
+  "mode": "rule",
+  "log-level": "info",
+  "external-controller": "127.0.0.1:9090",
+  "unified-delay": true,
+  "tcp-concurrent": true,
+  "ipv6": false,
+  "tun": {
+    "enable": true,
+    "stack": "gvisor",
+    "auto-route": true,
+    "auto-detect-interface": true,
+    "strict-route": true,
+    "dns-hijack": [
+      "any:53"
+    ]
+  },
+  "dns": {
+    "enable": true,
+    "respect-rules": true,
+    "ipv6": false,
+    "prefer-h3": false,
+    "enhanced-mode": "fake-ip",
+    "fake-ip-range": "198.18.0.1/16",
+    "default-nameserver": [
+      "223.5.5.5",
+      "119.29.29.29",
+      "2400:3200::1"
+    ],
+    "nameserver": [
+      "https://dns.cloudflare.com/dns-query",
+      "https://dns.google/dns-query"
+    ],
+    "proxy-server-nameserver-policy": null,
+    "proxy-server-nameserver": [
+      "https://dns.alidns.com/dns-query",
+      "https://doh.pub/dns-query"
+    ],
+    "direct-nameserver": [
+      "https://dns.alidns.com/dns-query",
+      "https://doh.pub/dns-query"
+    ],
+    "nameserver-policy": {
+      "dns.cloudflare.com": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ],
+      "dns.google": [
+        "8.8.8.8",
+        "8.8.4.4"
+      ],
+      "dns.quad9.net": [
+        "9.9.9.9",
+        "149.112.112.112"
+      ],
+      "dns.alidns.com": [
+        "223.5.5.5",
+        "223.6.6.6"
+      ],
+      "doh.pub": [
+        "1.12.12.12",
+        "120.53.53.53"
+      ],
+      "geosite:geolocation-!cn": [
+        "https://dns.cloudflare.com/dns-query#🚀 代理总控",
+        "https://dns.google/dns-query#🚀 代理总控"
+      ],
+      "geosite:cn": [
+        "https://dns.alidns.com/dns-query",
+        "https://doh.pub/dns-query"
+      ]
+    },
+    "fallback": [
+      "https://anycast.uncensoreddns.org/dns-query"
+    ],
+    "fallback-filter": {
+      "geoip": true,
+      "geoip-code": "CN",
+      "ipcidr": [
+        "240.0.0.0/4",
+        "127.0.0.0/8",
+        "0.0.0.0/32"
+      ]
+    },
+    "fake-ip-filter": [
+      "*.lan",
+      "*.local",
+      "localhost",
+      "*.msftconnecttest.com",
+      "*.msftncsi.com",
+      "*.msidentity.com",
+      "captive.apple.com",
+      "*.push.apple.com",
+      "stun.*",
+      "+.stun.*.*",
+      "+.stun.*.*.*",
+      "+.stun.*.*.*.*",
+      "+.stun.*.*.*.*.*",
+      "+.weixin.com",
+      "+.wechat.com",
+      "+.qq.com",
+      "+.tencent.com",
+      "speedtest.net"
+    ]
+  },
+  "profile": {
+    "store-selected": true,
+    "store-fake-ip": true
+  },
+  "proxy-groups": [
+    {
+      "name": "🚀 代理总控",
+      "type": "select",
+      "proxies": [
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🔔 苹果推送",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇲🇴 澳门自动",
+        "🇰🇷 韩国自动",
+        "🇹🇭 泰国自动",
+        "🇻🇳 越南自动",
+        "🇩🇪 德国自动",
+        "🇫🇷 法国自动",
+        "🇨🇭 瑞士自动",
+        "🇳🇱 荷兰自动",
+        "🇨🇦 加拿大自动",
+        "🇷🇺 俄罗斯自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🖥️ 全局订阅",
+      "type": "select",
+      "include-all": true
+    },
+    {
+      "name": "⚡ 自动测速",
+      "type": "url-test",
+      "include-all": true,
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🔔 苹果推送",
+      "type": "fallback",
+      "proxies": [
+        "🍎 苹果故转",
+        "DIRECT"
+      ],
+      "url": "http://captive.apple.com/hotspot-detect.html",
+      "interval": 300
+    },
+    {
+      "name": "🍎 苹果故转",
+      "type": "fallback",
+      "include-all": true,
+      "exclude-filter": "(?i)^(🔔 苹果推送|🍎 苹果故转)$",
+      "url": "http://captive.apple.com/hotspot-detect.html",
+      "interval": 300
+    },
+    {
+      "name": "📡 Google",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🛰️ Telegram",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "📲 X",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🤖 GPT",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🔍 Github",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "💫 Instagram",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "👤 Facebook",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "📄 WhatsApp",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "📹 YouTube",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🎬 Netflix",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "📽 Disney+",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🎶 Spotify",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "📺 TikTok",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🕹️ Twitch",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "👾 Gemini",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🏆 Claude",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🌟 Copilot",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "⚙️ Grok",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "✈️ Speedtest",
+      "type": "select",
+      "proxies": [
+        "🚀 代理总控",
+        "🖥️ 全局订阅",
+        "⚡ 自动测速",
+        "🇯🇵 日本自动",
+        "🇸🇬 新加坡自动",
+        "🇹🇼 台湾自动",
+        "🇭🇰 香港自动",
+        "🇰🇷 韩国自动",
+        "🇺🇸 美国自动",
+        "🇬🇧 英国自动",
+        "🇨🇦 加拿大自动",
+        "DIRECT"
+      ]
+    },
+    {
+      "name": "🇯🇵 日本自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[JP\\]|^JP$|\\bJP\\b|Japan|日本|东京|Tokyo|大阪|Osaka|🇯🇵)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇸🇬 新加坡自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[SG\\]|^SG$|\\bSG\\b|Singapore|新加坡|狮城|🇸🇬)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇹🇼 台湾自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[TW\\]|^TW$|\\bTW\\b|Taiwan|台湾|台灣|🇹🇼)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇭🇰 香港自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[HK\\]|^HK$|\\bHK\\b|Hong Kong|香港|🇭🇰)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇲🇴 澳门自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[MO\\]|^MO$|\\bMO\\b|Macau|Macao|澳门|澳門|🇲🇴)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇰🇷 韩国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[KR\\]|^KR$|\\bKR\\b|Korea|South Korea|韩国|🇰🇷)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇹🇭 泰国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[TH\\]|^TH$|\\bTH\\b|Thailand|Thai|泰国|曼谷|🇹🇭)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇻🇳 越南自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[VN\\]|^VN$|\\bVN\\b|Vietnam|Vietnamese|越南|胡志明市|河内|🇻🇳)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇺🇸 美国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[US\\]|^US$|\\bUS\\b|USA|United States|美国|纽约|洛杉矶|旧金山|西雅图|🇺🇸)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇬🇧 英国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[UK\\]|^UK$|\\bUK\\b|\\[GB\\]|^GB$|\\bGB\\b|United Kingdom|UK|England|英国|伦敦|🇬🇧)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇩🇪 德国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[DE\\]|^DE$|\\bDE\\b|Germany|德国|法兰克福|柏林|🇩🇪)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇫🇷 法国自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[FR\\]|^FR$|\\bFR\\b|France|法国|巴黎|🇫🇷)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇨🇭 瑞士自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[CH\\]|^CH$|\\bCH\\b|Switzerland|Swiss|瑞士|苏黎世|日内瓦|🇨🇭)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇳🇱 荷兰自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[NL\\]|^NL$|\\bNL\\b|Netherlands|Dutch|荷兰|阿姆斯特丹|🇳🇱)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇨🇦 加拿大自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[CA\\]|^CA$|\\bCA\\b|Canada|Canadian|加拿大|多伦多|温哥华|🇨🇦)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    },
+    {
+      "name": "🇷🇺 俄罗斯自动",
+      "type": "url-test",
+      "include-all": true,
+      "filter": "(?i)(\\[RU\\]|^RU$|\\bRU\\b|Russia|Russian|俄罗斯|莫斯科|圣彼得堡|🇷🇺)",
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": 600,
+      "tolerance": 50
+    }
+  ],
+  "rules": [
+    "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+    "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
+    "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
+    "IP-CIDR,127.0.0.0/8,DIRECT,no-resolve",
+    "GEOIP,LAN,DIRECT,no-resolve",
+    "DOMAIN-SUFFIX,push.apple.com,🔔 苹果推送",
+    "DOMAIN-SUFFIX,push-apple.com.akadns.net,🔔 苹果推送",
+    "DOMAIN-KEYWORD,apple.com.edgekey.net,🔔 苹果推送",
+    "IP-CIDR,17.249.0.0/16,🔔 苹果推送,no-resolve",
+    "IP-CIDR,17.252.0.0/16,🔔 苹果推送,no-resolve",
+    "IP-CIDR,17.57.144.0/22,🔔 苹果推送,no-resolve",
+    "IP-CIDR,17.188.128.0/18,🔔 苹果推送,no-resolve",
+    "IP-CIDR,17.188.20.0/23,🔔 苹果推送,no-resolve",
+    "IP-CIDR6,2620:149:a44::/48,🔔 苹果推送,no-resolve",
+    "IP-CIDR6,2403:300:a42::/48,🔔 苹果推送,no-resolve",
+    "IP-CIDR6,2403:300:a51::/48,🔔 苹果推送,no-resolve",
+    "IP-CIDR6,2a01:b740:a42::/48,🔔 苹果推送,no-resolve",
+    "DOMAIN-SUFFIX,youtube.com,📹 YouTube",
+    "DOMAIN-SUFFIX,youtu.be,📹 YouTube",
+    "DOMAIN-SUFFIX,youtube-nocookie.com,📹 YouTube",
+    "DOMAIN-SUFFIX,youtubei.googleapis.com,📹 YouTube",
+    "DOMAIN-SUFFIX,youtube.googleapis.com,📹 YouTube",
+    "DOMAIN-SUFFIX,ytimg.com,📹 YouTube",
+    "DOMAIN-SUFFIX,googlevideo.com,📹 YouTube",
+    "DOMAIN-SUFFIX,ggpht.com,📹 YouTube",
+    "DOMAIN-SUFFIX,netflix.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflix.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflix.ca,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflxext.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflximg.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflximg.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflxsearch.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflxso.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,nflxvideo.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest0.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest1.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest2.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest3.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest4.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest5.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest6.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest7.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest8.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest9.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixdnstest10.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixinvestor.com,🎬 Netflix",
+    "DOMAIN-SUFFIX,netflixtechblog.com,🎬 Netflix",
+    "DOMAIN,netflix.com.edgesuite.net,🎬 Netflix",
+    "DOMAIN-SUFFIX,disneyplus.com,📽 Disney+",
+    "DOMAIN-SUFFIX,disney-plus.net,📽 Disney+",
+    "DOMAIN-SUFFIX,dssott.com,📽 Disney+",
+    "DOMAIN-SUFFIX,dssedge.com,📽 Disney+",
+    "DOMAIN-SUFFIX,bamgrid.com,📽 Disney+",
+    "DOMAIN-SUFFIX,media.dssott.com,📽 Disney+",
+    "DOMAIN-SUFFIX,disney.playback.edge.bamgrid.com,📽 Disney+",
+    "DOMAIN-SUFFIX,star.playback.edge.bamgrid.com,📽 Disney+",
+    "DOMAIN-SUFFIX,search-api-disney.bamgrid.com,📽 Disney+",
+    "DOMAIN-SUFFIX,spotify.com,🎶 Spotify",
+    "DOMAIN-SUFFIX,spotifycdn.com,🎶 Spotify",
+    "DOMAIN-SUFFIX,scdn.co,🎶 Spotify",
+    "DOMAIN-SUFFIX,spclient.wg.spotify.com,🎶 Spotify",
+    "DOMAIN-SUFFIX,api-partner.spotify.com,🎶 Spotify",
+    "DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net,🎶 Spotify",
+    "DOMAIN-SUFFIX,tiktok.com,📺 TikTok",
+    "DOMAIN-SUFFIX,tiktokcdn.com,📺 TikTok",
+    "DOMAIN-SUFFIX,tiktokcdn-us.com,📺 TikTok",
+    "DOMAIN-SUFFIX,tiktokv.com,📺 TikTok",
+    "DOMAIN-SUFFIX,tiktokd.org,📺 TikTok",
+    "DOMAIN-SUFFIX,ibytedtos.com,📺 TikTok",
+    "DOMAIN-SUFFIX,ibyteimg.com,📺 TikTok",
+    "DOMAIN-SUFFIX,byteoversea.com,📺 TikTok",
+    "DOMAIN-SUFFIX,muscdn.com,📺 TikTok",
+    "DOMAIN-SUFFIX,musical.ly,📺 TikTok",
+    "DOMAIN-SUFFIX,twitch.tv,🕹️ Twitch",
+    "DOMAIN-SUFFIX,twitchcdn.net,🕹️ Twitch",
+    "DOMAIN-SUFFIX,jtvnw.net,🕹️ Twitch",
+    "DOMAIN-SUFFIX,ttvnw.net,🕹️ Twitch",
+    "DOMAIN-SUFFIX,twitchsvc.net,🕹️ Twitch",
+    "DOMAIN-SUFFIX,chatgpt.com,🤖 GPT",
+    "DOMAIN-SUFFIX,openai.com,🤖 GPT",
+    "DOMAIN-SUFFIX,auth.openai.com,🤖 GPT",
+    "DOMAIN-SUFFIX,oaistatic.com,🤖 GPT",
+    "DOMAIN-SUFFIX,oaiusercontent.com,🤖 GPT",
+    "DOMAIN,android.chat.openai.com,🤖 GPT",
+    "DOMAIN,auth0.openai.com,🤖 GPT",
+    "DOMAIN,chat.openai.com,🤖 GPT",
+    "DOMAIN,desktop.chat.openai.com,🤖 GPT",
+    "DOMAIN,ios.chat.openai.com,🤖 GPT",
+    "DOMAIN,tcr9i.chat.openai.com,🤖 GPT",
+    "DOMAIN,cdn.openaimerge.com,🤖 GPT",
+    "DOMAIN,ws.chatgpt.com,🤖 GPT",
+    "DOMAIN,setup.auth.openai.com,🤖 GPT",
+    "DOMAIN,cdn.workos.com,🤖 GPT",
+    "DOMAIN,forwarder.workos.com,🤖 GPT",
+    "DOMAIN,images.workoscdn.com,🤖 GPT",
+    "DOMAIN,workos.imgix.net,🤖 GPT",
+    "DOMAIN,setup.workos.com,🤖 GPT",
+    "DOMAIN,ct.sendgrid.net,🤖 GPT",
+    "DOMAIN,oaistatsig.com,🤖 GPT",
+    "DOMAIN,intercom.io,🤖 GPT",
+    "DOMAIN,intercomcdn.com,🤖 GPT",
+    "DOMAIN,js.intercomcdn.com,🤖 GPT",
+    "DOMAIN,js.stripe.com,🤖 GPT",
+    "DOMAIN,o207216.ingest.sentry.io,🤖 GPT",
+    "DOMAIN,o33249.ingest.sentry.io,🤖 GPT",
+    "DOMAIN,rum.browser-intake-datadoghq.com,🤖 GPT",
+    "DOMAIN,challenges.cloudflare.com,🤖 GPT",
+    "DOMAIN,humb.apple.com,🤖 GPT",
+    "DOMAIN-SUFFIX,gemini.google.com,👾 Gemini",
+    "DOMAIN-SUFFIX,aistudio.google.com,👾 Gemini",
+    "DOMAIN-SUFFIX,deepmind.com,👾 Gemini",
+    "DOMAIN-SUFFIX,deepmind.google,👾 Gemini",
+    "DOMAIN-SUFFIX,gemini.googleusercontent.com,👾 Gemini",
+    "DOMAIN-SUFFIX,makersuite.google.com,👾 Gemini",
+    "DOMAIN-SUFFIX,claude.ai,🏆 Claude",
+    "DOMAIN-SUFFIX,anthropic.com,🏆 Claude",
+    "DOMAIN-SUFFIX,claudeusercontent.com,🏆 Claude",
+    "DOMAIN-SUFFIX,claudeusercontent.com.cdn.cloudflare.net,🏆 Claude",
+    "DOMAIN-SUFFIX,copilot.microsoft.com,🌟 Copilot",
+    "DOMAIN-SUFFIX,ai.microsoft.com,🌟 Copilot",
+    "DOMAIN-SUFFIX,designer.microsoft.com,🌟 Copilot",
+    "DOMAIN-SUFFIX,copilot.com,🌟 Copilot",
+    "DOMAIN-KEYWORD,copilot,🌟 Copilot",
+    "DOMAIN-SUFFIX,grok.com,⚙️ Grok",
+    "DOMAIN-SUFFIX,x.ai,⚙️ Grok",
+    "DOMAIN-KEYWORD,grok,⚙️ Grok",
+    "DOMAIN-KEYWORD,google,📡 Google",
+    "DOMAIN-SUFFIX,gmail.com,📡 Google",
+    "DOMAIN-SUFFIX,googleusercontent.com,📡 Google",
+    "DOMAIN-SUFFIX,gstatic.com,📡 Google",
+    "DOMAIN-SUFFIX,googleapis.com,📡 Google",
+    "DOMAIN-SUFFIX,x.com,📲 X",
+    "DOMAIN-SUFFIX,twitter.com,📲 X",
+    "DOMAIN-SUFFIX,t.co,📲 X",
+    "DOMAIN-SUFFIX,twimg.com,📲 X",
+    "DOMAIN-SUFFIX,facebook.com,👤 Facebook",
+    "DOMAIN-SUFFIX,facebook.net,👤 Facebook",
+    "DOMAIN-SUFFIX,fbcdn.net,👤 Facebook",
+    "DOMAIN-SUFFIX,fbsbx.com,👤 Facebook",
+    "DOMAIN-SUFFIX,fb.com,👤 Facebook",
+    "DOMAIN-SUFFIX,instagram.com,💫 Instagram",
+    "DOMAIN-SUFFIX,cdninstagram.com,💫 Instagram",
+    "DOMAIN-SUFFIX,instagram.net,💫 Instagram",
+    "DOMAIN-SUFFIX,whatsapp.com,📄 WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.net,📄 WhatsApp",
+    "DOMAIN-SUFFIX,wa.me,📄 WhatsApp",
+    "DOMAIN-SUFFIX,whatsapp.org,📄 WhatsApp",
+    "DOMAIN-SUFFIX,telegram.org,🛰️ Telegram",
+    "DOMAIN-SUFFIX,telegram.me,🛰️ Telegram",
+    "DOMAIN-SUFFIX,t.me,🛰️ Telegram",
+    "DOMAIN-SUFFIX,tdesktop.com,🛰️ Telegram",
+    "DOMAIN-SUFFIX,telegra.ph,🛰️ Telegram",
+    "DOMAIN-SUFFIX,telegram.dog,🛰️ Telegram",
+    "IP-CIDR,91.108.4.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,91.108.8.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,91.108.12.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,91.108.16.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,91.108.20.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,91.108.56.0/22,🛰️ Telegram,no-resolve",
+    "IP-CIDR,149.154.160.0/20,🛰️ Telegram,no-resolve",
+    "IP-CIDR6,2001:b28:f23d::/48,🛰️ Telegram,no-resolve",
+    "IP-CIDR6,2001:b28:f23f::/48,🛰️ Telegram,no-resolve",
+    "IP-CIDR6,2001:67c:4e8::/48,🛰️ Telegram,no-resolve",
+    "DOMAIN-SUFFIX,github.com,🔍 Github",
+    "DOMAIN-SUFFIX,githubusercontent.com,🔍 Github",
+    "DOMAIN-SUFFIX,githubassets.com,🔍 Github",
+    "DOMAIN-SUFFIX,raw.githubusercontent.com,🔍 Github",
+    "DOMAIN-SUFFIX,github.io,🔍 Github",
+    "DOMAIN-SUFFIX,github.dev,🔍 Github",
+    "DOMAIN-SUFFIX,githubstatus.com,🔍 Github",
+    "DOMAIN-SUFFIX,speedtest.net,✈️ Speedtest",
+    "DOMAIN-SUFFIX,speedtest.com,✈️ Speedtest",
+    "DOMAIN-SUFFIX,ookla.com,✈️ Speedtest",
+    "DOMAIN-SUFFIX,ooklaserver.net,✈️ Speedtest",
+    "DOMAIN-SUFFIX,ookla.net,✈️ Speedtest",
+    "DOMAIN-SUFFIX,speedtestcustom.com,✈️ Speedtest",
+    "RULE-SET,Apple,DIRECT",
+    "RULE-SET,Apple_Domain,DIRECT",
+    "RULE-SET,AdvertisingLite,REJECT",
+    "RULE-SET,AdvertisingLite_Domain,REJECT",
+    "RULE-SET,Privacy,REJECT",
+    "RULE-SET,Privacy_Domain,REJECT",
+    "RULE-SET,ACL4SSR_BanAD,REJECT",
+    "RULE-SET,ACL4SSR_BanProgramAD,REJECT",
+    "DOMAIN-KEYWORD,openai,🚀 代理总控",
+    "DOMAIN-KEYWORD,chatgpt,🚀 代理总控",
+    "DOMAIN-SUFFIX,auth0.com,🚀 代理总控",
+    "DOMAIN-SUFFIX,identrust.com,🚀 代理总控",
+    "DOMAIN,onedrive.live.com,🚀 代理总控",
+    "DOMAIN-SUFFIX,1drv.com,🚀 代理总控",
+    "DOMAIN-KEYWORD,tiktok,🚀 代理总控",
+    "DOMAIN-SUFFIX,browserleaks.com,🚀 代理总控",
+    "RULE-SET,ChinaMax,DIRECT",
+    "RULE-SET,ChinaMax_Domain,DIRECT",
+    "RULE-SET,ChinaMax_IP,DIRECT",
+    "GEOSITE,CN,DIRECT",
+    "GEOIP,CN,DIRECT,no-resolve",
+    "MATCH,🚀 代理总控"
+  ],
+  "rule-providers": {
+    "Apple": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/Apple.yaml"
+    },
+    "Apple_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/Apple_Domain.mrs"
+    },
+    "AdvertisingLite": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/AdvertisingLite.yaml"
+    },
+    "AdvertisingLite_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/AdvertisingLite_Domain.mrs"
+    },
+    "Privacy": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/Privacy.yaml"
+    },
+    "Privacy_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/Privacy_Domain.mrs"
+    },
+    "ACL4SSR_BanAD": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/BanAD_domain.mrs"
+    },
+    "ACL4SSR_BanProgramAD": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/BanProgramAD_domain.mrs"
+    },
+    "ChinaMax": {
+      "type": "http",
+      "behavior": "classical",
+      "format": "yaml",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/ChinaMax.yaml"
+    },
+    "ChinaMax_Domain": {
+      "type": "http",
+      "behavior": "domain",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/ChinaMax_Domain.mrs"
+    },
+    "ChinaMax_IP": {
+      "type": "http",
+      "behavior": "ipcidr",
+      "format": "mrs",
+      "interval": 86400,
+      "url": "https://raw.githubusercontent.com/iewcxcx/Clash-ios/main/rules/ChinaMax_IP.mrs"
+    }
+  }
+};
+
+  return {
+    ...config,
+    ...fixed
+  };
+}
