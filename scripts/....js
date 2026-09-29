@@ -1,6 +1,5 @@
 function main(config) {
   const fixed = {
-    {
   "mixed-port": 7890,
   "allow-lan": false,
   "bind-address": "*",
@@ -36,7 +35,6 @@ function main(config) {
       "https://dns.cloudflare.com/dns-query",
       "https://dns.google/dns-query"
     ],
-    "proxy-server-nameserver-policy": null,
     "proxy-server-nameserver": [
       "https://dns.alidns.com/dns-query",
       "https://doh.pub/dns-query"
@@ -67,8 +65,8 @@ function main(config) {
         "120.53.53.53"
       ],
       "geosite:geolocation-!cn": [
-        "https://dns.cloudflare.com/dns-query#代理总控",
-        "https://dns.google/dns-query#代理总控"
+        "https://dns.cloudflare.com/dns-query",
+        "https://dns.google/dns-query"
       ],
       "geosite:cn": [
         "https://dns.alidns.com/dns-query",
