@@ -35,7 +35,6 @@ function main(config) {
       "https://dns.cloudflare.com/dns-query",
       "https://dns.google/dns-query"
     ],
-    "proxy-server-nameserver-policy": null,
     "proxy-server-nameserver": [
       "https://dns.alidns.com/dns-query",
       "https://doh.pub/dns-query"
