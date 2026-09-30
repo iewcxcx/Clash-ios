@@ -75,11 +75,6 @@ function main(config) {
           "120.53.53.53"
         ],
 
-        "geosite:geolocation-!cn": [
-          "https://dns.cloudflare.com/dns-query",
-          "https://dns.google/dns-query"
-        ],
-
         "geosite:cn": [
           "https://dns.alidns.com/dns-query",
           "https://doh.pub/dns-query"
